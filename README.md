@@ -146,16 +146,42 @@ Rebuild nightly
 ##### DEV
 Development environment
 
+
+## CI/CD Pipeline
+
+- Developer creates code change, signs it with GPG key and pushes to VCS
+- Artifact is built and unit tested automatically 
+- Upon successful tests outcome Developer creates Pull Request/Merge Request to SIT
+- Code change is reviewed (built and tested locally according to PR description)
+- Code change is approved by 2 junior members or 1 senior member of the team
+- Code merge triggers build in SIT
+- E2E tests are performed - if failed, code is reverted
+- User Researcher requests tested code to be merged to UAT 
+- User Acceptance Testing proceeds
+- Upon successful UAT, Non-live Version of Production is created (Blue/Green)
+- E2E production tests are performed on non-live version of Production
+- Upon success Non-live becomes Live Production Environment
+- Old Production is decommissioned
+
+
+-------------------------------------------------------------------------------
+## Development process
+
 Branching out:
 - Developer starts working on code which is branched out from PRD branch. 
 - In case PRD is behind in terms of latest features (it should not last longer than 1 sprint), UAT should be the base for developemnt.
 - SIT is considered unstable and should not be the base for any development.
+
 
 Each developer works locally. Ideally whole stack is brought up on the local development machine.
 
 If not possible, any non offensive/non destructive integrations will reach relevant parts of UAT environment.
 
 If not possible, any offensive/destructive integrations will reach relevant parts of SIT environment.
+
+
+
+
 
 
 -------------------------------------------------------------------------------
@@ -189,15 +215,18 @@ Please see `Testing` section
 -------------------------------------------------------------------------------
 
 ## Testing
+We are aiming for all tests to be automated and build into build pipeline 
+
 
 ### Functional testing
+
 
 ##### Unit testing
 Each function should have unit tests written covering as many edge cases as possible.
 100% code test coverage is not possible in real world, byt we are aiming for it.
 
 ##### Integration testing
-E2E tests.
+E2E tests
 When some sort of unit testing is not possible, end-to-end tests should cover the gap.
 
 ##### System testing
