@@ -82,9 +82,13 @@ Each task developers are working on should be achievable within 1 day.
 If certain task takes longer, it should be split into smaller subtasks. 
 
 Each code merge will contain the following components:
+
 - Code
+
 - Unit tests
+
 - Integration definition(s)
+
 - Documentation
 
   - Installing / Getting started
@@ -112,7 +116,7 @@ Every commit produces artifact via automated build triggered from VCS.
 
 All artifacts are stateless
 
-
+All artifacts are run as non-elevated user (root is forbidden)
 
 
 ## Continuous deployment
@@ -125,9 +129,6 @@ Live Environment
 Blue/Green deployments:
 - via code merge from UAT by User Researcher
 - DNS switch after all E2E tests passed
-
-Currently no canary deployments make sense due to lack of users.
-Possible for future use.
 
 
 ##### UAT
@@ -167,12 +168,7 @@ Development environment
 -------------------------------------------------------------------------------
 ## Development process
 
-Branching out:
-- Developer starts working on code which is branched out from PRD branch. 
-- In case PRD is behind in terms of latest features (it should not last longer than 1 sprint), UAT should be the base for developemnt.
-- SIT is considered unstable and should not be the base for any development.
-
-
+#### Foundations
 Each developer works locally. Ideally whole stack is brought up on the local development machine.
 
 If not possible, any non offensive/non destructive integrations will reach relevant parts of UAT environment.
@@ -180,7 +176,71 @@ If not possible, any non offensive/non destructive integrations will reach relev
 If not possible, any offensive/destructive integrations will reach relevant parts of SIT environment.
 
 
+#### Branching out
+- Branch names should have format of <Task-Number>_<short_description> and should be all lower case.
+- Developer starts working on code which is branched out from PRD branch. 
+- In case PRD is behind in terms of latest features (it should not last longer than 1 sprint), UAT should be the base for developemnt.
+- SIT is considered unstable and should not be the base for any development.
 
+
+#### Versioning
+Each artifact will be tagged with unique ID. 
+Microservices architecture allows to use various combinations of different versions of artifact to build the final system.
+
+Therefore there will be only the Current Version of the System, with pre-defined microservices' tags.
+
+All previous Version configurations will be stored in Version control for history and legal purposes.
+
+
+#### Code
+The following needs to be defined for code:
+- formatting
+- linting
+- checking for existence of secrets
+- etc.
+
+-------------------------------------------------------------------------------
+## Infractructure
+All applications will run inside containers on ACP Kubernetes platform.
+Databases will be provisioned by ACP
+
+
+-------------------------------------------------------------------------------
+## Technology stack
+Deployments:
+- AWS cloud (eu-west-2 region)
+- Kubernetes (ACP cluster, non-prod & prod)
+- Drone (Deployment Tool, ACP provided)
+- Containers (Docker v...)
+- quay.io (Artifact Storage & Vulnerability Testing)
+- Hashicorp Vault (Secret Management)
+
+Application:
+- NodeJS v8.11 (Frontend)
+- Python v3.7 (Backend)
+- Django v... (REST API)
+
+Data storage:
+- PostgerSQL v9.6 (Main data storage)
+- Redis v... (Frontend cache)
+- S3 (attachement storage)
+- S3 (backup storage)
+- Glacier (historical backup storage)
+
+Testing:
+- Cucumber (Unit testing)
+- Locust.io (Performance/Load testing)
+- SSL Labs (Encryption testing)
+- ClamAV (Antivirus scanning)
+- OWASP ZAP proxy (security pipeline tool)
+
+
+-------------------------------------------------------------------------------
+## Data
+
+### Storage 
+
+### Backup & Recovery
 
 
 
@@ -268,3 +328,14 @@ When some sort of unit testing is not possible, end-to-end tests should cover th
 
 ##### Localization testing
 
+
+
+
+-------------------------------------------------------------------------------
+## Operations
+
+### Monitoring
+- ACP provided Sysdig
+
+### Logging
+- ACP provided ELK
