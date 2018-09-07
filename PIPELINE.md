@@ -1,7 +1,7 @@
 # CI/CD Pipeline
 
 
-
+## High level overview
 - Developer creates code change, signs it with GPG key and pushes to VCS
 - Artifact is built and unit tested automatically 
 - Upon successful tests outcome Developer creates Pull Request/Merge Request to SIT
@@ -15,3 +15,10 @@
 - E2E production tests are performed on non-live version of Production
 - Upon success Non-live becomes Live Production Environment
 - Old Production is decommissioned
+
+## Technology proposed
+- VCS: GitHub/GitLab
+- Build tool: Drone
+- Artifact repository: Quay.io
+- Deployment provider: Drone
+- Deployment cluster: Kubernetes (ACP)
