@@ -68,6 +68,10 @@ to become more effective, then tunes and adjusts
 its behavior accordingly. 
 
 -------------------------------------------------------------------------------
+# 12 Factor App
+Please see [here](https://12factor.net/)
+
+-------------------------------------------------------------------------------
 # CI/CD
 
 ### Continuous integration
@@ -106,7 +110,7 @@ Each code merge will contain the following components:
   - Types of review required
 
 
-
+-------------------------------------------------------------------------------
 ## Continuous delivery
 We will aim to have the code merged several time a day to catch merge conflict as early as possible.
 
@@ -119,6 +123,7 @@ All artifacts are stateless
 All artifacts are run as non-elevated user (root is forbidden)
 
 
+-------------------------------------------------------------------------------
 ## Continuous deployment
 
 ### Environments 
@@ -148,21 +153,10 @@ Rebuild nightly
 Development environment
 
 
-## CI/CD Pipeline
 
-- Developer creates code change, signs it with GPG key and pushes to VCS
-- Artifact is built and unit tested automatically 
-- Upon successful tests outcome Developer creates Pull Request/Merge Request to SIT
-- Code change is reviewed (built and tested locally according to PR description)
-- Code change is approved by 2 junior members or 1 senior member of the team
-- Code merge triggers build in SIT
-- E2E tests are performed - if failed, code is reverted
-- User Researcher requests tested code to be merged to UAT 
-- User Acceptance Testing proceeds
-- Upon successful UAT, Non-live Version of Production is created (Blue/Green)
-- E2E production tests are performed on non-live version of Production
-- Upon success Non-live becomes Live Production Environment
-- Old Production is decommissioned
+-------------------------------------------------------------------------------
+## CI/CD Pipeline
+Detailed description are available here: [PIPELINE](./PIPELINE.md)
 
 
 -------------------------------------------------------------------------------
@@ -198,6 +192,11 @@ The following needs to be defined for code:
 - linting
 - checking for existence of secrets
 - etc.
+
+#### Continous Documentation
+- All functions have simple explanation 
+- All files have information required to pick up code easily (quite fuzzy - define more)
+- All parts of the system are documented and documentation is tested (e.g. by real users?)
 
 -------------------------------------------------------------------------------
 ## Infractructure
